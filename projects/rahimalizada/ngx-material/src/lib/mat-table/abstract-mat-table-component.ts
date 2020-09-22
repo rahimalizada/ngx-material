@@ -80,7 +80,7 @@ export abstract class AbstractMatTableDirective<T> implements OnInit, OnDestroy,
     this.subscription.unsubscribe();
   }
 
-  private updateTable(): void {
+  public updateTable(): void {
     this.subscription = merge(
       this.sort.sortChange.pipe(
         tap((val) => {
