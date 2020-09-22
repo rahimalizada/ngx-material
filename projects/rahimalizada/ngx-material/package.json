@@ -28,7 +28,9 @@
   },
   "peerDependencies": {
     "@angular/common": "^10.1.2",
-    "@angular/core": "^10.1.2"
+    "@angular/core": "^10.1.2",
+    "@angular/cdk": "^10.2.2",
+    "@angular/material": "^10.2.2"
   },
   "dependencies": {
     "tslib": "^2.0.0"
