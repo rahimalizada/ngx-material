@@ -1,6 +1,24 @@
 {
   "name": "ngx-material",
   "version": "0.0.0",
+  "description": "Helpers for working with material for angular",
+  "keywords": [
+    "angular",
+    "material",
+    "helper"
+  ],
+  "author": {
+    "name": "Rahim Alizada"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/rahimalizada/ngx-material",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rahimalizada/ngx-material.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rahimalizada/ngx-material/issues"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -8,7 +26,6 @@
     "test": "ng test",
     "lint": "ng lint"
   },
-  "private": true,
   "dependencies": {
     "@angular/animations": "~10.1.2",
     "@angular/common": "~10.1.2",
