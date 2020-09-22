@@ -1,12 +1,8 @@
 import { NgModule } from '@angular/core';
-import { NgxMaterialComponent } from './ngx-material.component';
-
-
 
 @NgModule({
-  declarations: [NgxMaterialComponent],
-  imports: [
-  ],
-  exports: [NgxMaterialComponent]
+  declarations: [],
+  imports: [],
+  exports: [],
 })
-export class NgxMaterialModule { }
+export class NgxMaterialModule {}
