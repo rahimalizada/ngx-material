@@ -73,14 +73,16 @@ export abstract class AbstractMatTableDirective<T> implements OnInit, OnDestroy,
   }
 
   ngAfterViewInit(): void {
-    this.updateTable();
+    this.reloadTable();
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 
-  public updateTable(): void {
+  protected reloadTable(): void {
+    this.subscription.unsubscribe();
+
     this.subscription = merge(
       this.sort.sortChange.pipe(
         tap((val) => {
