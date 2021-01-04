@@ -16,12 +16,6 @@ export abstract class AbstractMatTableDirective<T> implements OnInit, OnDestroy,
   @ViewChild(MatPaginator, { static: false }) private paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) private sort: MatSort;
 
-  private searchTerms: string;
-  private searchTermsSubject = new Subject<string>();
-  private requestFiltersSubject = new Subject<any>();
-  private requestFilters: any;
-  private subscription: Subscription;
-
   pageSizeOptions = [5, 10, 25, 100, 200];
   currentPageSize: number;
 
@@ -32,6 +26,12 @@ export abstract class AbstractMatTableDirective<T> implements OnInit, OnDestroy,
 
   public userId: string;
 
+  private searchTerms: string;
+  private searchTermsSubject = new Subject<string>();
+  private requestFiltersSubject = new Subject<any>();
+  private requestFilters: any;
+  private subscription: Subscription;
+
   constructor(protected service: PagerLoader<T>, protected activatedRoute: ActivatedRoute, protected router: Router) {}
 
   loadData(
@@ -39,7 +39,7 @@ export abstract class AbstractMatTableDirective<T> implements OnInit, OnDestroy,
     pageSize: number,
     sort: string,
     sortDirection: string,
-    searchTerms: string,
+    searchTerms?: string,
     requestFilters?: any,
   ): Observable<Pager<T>> {
     const result = this.userId
@@ -80,71 +80,6 @@ export abstract class AbstractMatTableDirective<T> implements OnInit, OnDestroy,
     this.subscription.unsubscribe();
   }
 
-  protected reloadTable(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
-
-    this.subscription = merge(
-      this.sort.sortChange.pipe(
-        tap((val) => {
-          if (val) {
-            this.paginator.firstPage();
-          }
-        }),
-      ),
-      this.searchTermsSubject.pipe(
-        debounceTime(500),
-        distinctUntilChanged(),
-        tap((val) => {
-          if (val) {
-            this.paginator.firstPage();
-          }
-        }),
-      ),
-      this.requestFiltersSubject.pipe(
-        debounceTime(500),
-        distinctUntilChanged(),
-        tap((val) => {
-          if (val) {
-            this.paginator.firstPage();
-          }
-        }),
-      ),
-      this.paginator.page.pipe(tap((val) => {})),
-    )
-      .pipe(
-        startWith(null as string),
-        switchMap((val) => {
-          this.isLoading = true;
-          return this.loadData(
-            this.paginator.pageIndex,
-            this.paginator.pageSize,
-            this.sort.active,
-            this.sort.direction,
-            this.searchTerms,
-            this.requestFilters,
-          );
-        }),
-        tap((data: Pager<T>) => (this.isLoading = false)),
-        catchError(() => {
-          this.isLoading = false;
-          return of([]);
-        }),
-      )
-      .subscribe((data: Pager<T>) => {
-        this.pagerResult = data;
-        this.items = data.items;
-      });
-  }
-
-  protected updateItem(index: number, item: T): void {
-    this.pagerResult.items[index] = item;
-    this.items[index] = item;
-
-    this.table.renderRows();
-  }
-
   loadPageSize(): void {
     if (this.currentPageSize) {
       return;
@@ -179,5 +114,56 @@ export abstract class AbstractMatTableDirective<T> implements OnInit, OnDestroy,
   onSearchTermsChange(searchTerms?: string): void {
     this.searchTerms = searchTerms;
     this.searchTermsSubject.next(searchTerms);
+  }
+
+  protected reloadTable(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+
+    this.subscription = merge(
+      this.sort?.sortChange.pipe(tap(() => this.paginator.firstPage())),
+      this.searchTermsSubject.pipe(
+        debounceTime(500),
+        distinctUntilChanged(),
+        tap(() => this.paginator.firstPage()),
+      ),
+      this.requestFiltersSubject.pipe(
+        debounceTime(500),
+        distinctUntilChanged(),
+        tap(() => this.paginator.firstPage()),
+      ),
+      this.paginator.page.pipe(tap((val) => {})),
+    )
+      .pipe(
+        startWith(null as string),
+        switchMap((val) => {
+          this.isLoading = true;
+          return this.loadData(
+            this.paginator.pageIndex,
+            this.paginator.pageSize,
+            this.sort.active,
+            this.sort.direction,
+            this.searchTerms,
+            this.requestFilters,
+          );
+        }),
+        tap((data: Pager<T>) => (this.isLoading = false)),
+        catchError(() => {
+          this.isLoading = false;
+          return of([]);
+        }),
+      )
+      .subscribe((data: Pager<T>) => {
+        this.pagerResult = data;
+        this.items = data.items;
+      });
+  }
+
+  protected updateItem(index: number, item: T): void {
+    this.pagerResult.items[index] = item;
+    this.items[index] = item;
+
+    this.table.renderRows();
   }
 }
