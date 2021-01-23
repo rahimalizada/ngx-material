@@ -1,5 +1,5 @@
+import { PagerResult } from '@rahimalizada/ngx-common';
 import { Observable } from 'rxjs';
-import { Pager } from './pager.model';
 
 export interface PagerLoader<T> {
   pagerByPath(
@@ -10,7 +10,7 @@ export interface PagerLoader<T> {
     sortDirection: string,
     searchTerms: string,
     requestFilters?: any,
-  ): Observable<Pager<T>>;
+  ): Observable<PagerResult<T>>;
 
   pager(
     page: number,
@@ -19,5 +19,5 @@ export interface PagerLoader<T> {
     sortDirection: string,
     searchTerms: string,
     requestFilters?: any,
-  ): Observable<Pager<T>>;
+  ): Observable<PagerResult<T>>;
 }

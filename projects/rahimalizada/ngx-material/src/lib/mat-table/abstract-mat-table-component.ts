@@ -3,10 +3,10 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
+import { PagerResult } from '@rahimalizada/ngx-common';
 import { merge, Observable, of, Subject, Subscription } from 'rxjs';
 import { catchError, debounceTime, delay, distinctUntilChanged, startWith, switchMap, tap } from 'rxjs/operators';
 import { PagerLoader } from './pager-loader.model';
-import { Pager } from './pager.model';
 
 @Directive()
 export abstract class AbstractMatTableDirective<T> implements OnInit, OnDestroy, AfterViewInit {
@@ -19,7 +19,7 @@ export abstract class AbstractMatTableDirective<T> implements OnInit, OnDestroy,
   pageSizeOptions = [5, 10, 25, 100, 200];
   currentPageSize: number;
 
-  pagerResult: Pager<T>;
+  pagerResult: PagerResult<T>;
   isLoading = true;
   items: T[] = [];
   itemsSubject = new Subject<T[]>();
@@ -41,7 +41,7 @@ export abstract class AbstractMatTableDirective<T> implements OnInit, OnDestroy,
     sortDirection: string,
     searchTerms?: string,
     requestFilters?: any,
-  ): Observable<Pager<T>> {
+  ): Observable<PagerResult<T>> {
     const result = this.userId
       ? this.service.pagerByPath(`user/${this.userId}`, page, pageSize, sort, sortDirection, searchTerms, requestFilters)
       : this.service.pager(page, pageSize, sort, sortDirection, searchTerms, requestFilters);
@@ -148,13 +148,13 @@ export abstract class AbstractMatTableDirective<T> implements OnInit, OnDestroy,
             this.requestFilters,
           );
         }),
-        tap((data: Pager<T>) => (this.isLoading = false)),
+        tap((data: PagerResult<T>) => (this.isLoading = false)),
         catchError(() => {
           this.isLoading = false;
           return of([]);
         }),
       )
-      .subscribe((data: Pager<T>) => {
+      .subscribe((data: PagerResult<T>) => {
         this.pagerResult = data;
         this.items = data.items;
       });
