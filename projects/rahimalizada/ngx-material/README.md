@@ -1,11 +1,14 @@
 # NgxMaterial
 
+[![Build Status](https://www.travis-ci.com/rahimalizada/ngx-material.svg?branch=master)](https://www.travis-ci.com/rahimalizada/ngx-material)
+
 This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.1.2.
 
 ## Code scaffolding
 
 Run `ng generate component component-name --project ngx-material` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project ngx-material`.
-> Note: Don't forget to add `--project ngx-material` or else it will be added to the default project in your `angular.json` file. 
+
+> Note: Don't forget to add `--project ngx-material` or else it will be added to the default project in your `angular.json` file.
 
 ## Build
 
