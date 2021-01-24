@@ -1,5 +1,5 @@
-import { PagerResult } from '@rahimalizada/ngx-common';
 import { Observable } from 'rxjs';
+import { PagerResult } from './pager-result.model';
 
 export interface PagerLoader<T> {
   pagerByPath(

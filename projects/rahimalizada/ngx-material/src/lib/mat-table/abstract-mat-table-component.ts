@@ -3,10 +3,10 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PagerResult } from '@rahimalizada/ngx-common';
 import { merge, Observable, of, Subject, Subscription } from 'rxjs';
 import { catchError, debounceTime, delay, distinctUntilChanged, startWith, switchMap, tap } from 'rxjs/operators';
 import { PagerLoader } from './pager-loader.model';
+import { PagerResult } from './pager-result.model';
 
 @Directive()
 export abstract class AbstractMatTableDirective<T> implements OnInit, OnDestroy, AfterViewInit {
