@@ -19,6 +19,9 @@
   "bugs": {
     "url": "https://github.com/rahimalizada/ngx-material/issues"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

@@ -19,12 +19,8 @@
   "bugs": {
     "url": "https://github.com/rahimalizada/ngx-material/issues"
   },
-  "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "test": "ng test",
-    "lint": "ng lint"
+  "publishConfig": {
+    "access": "public"
   },
   "peerDependencies": {
     "@angular/common": "^11.1.0",
