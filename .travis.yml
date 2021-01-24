@@ -1,5 +1,6 @@
-# dist: trusty
-sudo: false
+arch: amd64
+os: linux
+dist: focal
 
 language: node_js
 node_js:
@@ -7,25 +8,33 @@ node_js:
 
 addons:
   apt:
-    sources:
-      - google-chrome
     packages:
       - google-chrome-stable
 
+# cache: npm
 cache:
   directories:
     - ./node_modules
 
 install:
-  - npm install
+  # npm ci is slower since angular compiles dependencies in /node_modules and they can be reused
+  - npm i
 
 script:
+  # - ng lint
   - npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
   - ng build --prod
+
+before_deploy:
+  # Deploy from library build folder
+  - cd ${TRAVIS_BUILD_DIR}/dist/rahimalizada/ngx-material
 
 deploy:
   provider: npm
   email: "rahim.alizada@gmail.com"
-  api_key: "de18a1e8-5dcd-49b1-9b52-8ead9b47203c"
+  api_token:
+    # Generated per repository
+    secure: "PpUnwqoaRS0ds7n11ImYnZjv401JmDni+q/rhYLJRNiuTqCb12fjQjCJ2dXbGk8fv2CHp100Kol4vW9pqI4Kh9DvOnFiugmUc0mqu4oC7hr7hvQI1LLCBd/7hScG7ncMorGAaTRW/3kF6jy8UoT87fRasAeZBIN5chAvBzCZYtLzGgzCyO6Pr3sgmoS/O/dKoPZvRZbWlG1nLNClUy0bwNwDjCFoBwQ49DiWfTf43sW0DM5HIasplIEAqwOn78YEsCYPNnyHqMA0nHU8XzGwF4qshZ9PGRwVCTHokEbY1hz6EtSMM34L40n1EDoUtglQJJfTUx+WieHYjGEUjsdSU0AH/YC/VOdZY/8ppnbA4LtEiz2edB+TK9Ub7f2Ddgeh5yTFv7x62WGA00UDfXF6IxDw5JES/7gZ1POImebzDki7pl582C5DLfhHA5zbArpAJHHqwd2l7QkpwEf1bIUreWlG86S0LFKcNJjaQ5rUmmctvwE8A7fCgpACQqX5/PF6vA4vmw7U1+wQnzw6wZgmzMuNWF91RQ+FFWmQIa9q9CqqLDqiTrd1UDNQZfCkTNvL0GFcHkA9M1AK+QxIbChodvO6eD8Wo8BVvDQ1H2xB9ZbqNcfAjn5CsVkDhe4uMYv3Wn1qlvdYWwaz2o05rMVxGcrO9fxT0cQFOoYX9F0onHI="
   on:
     tags: true
+  skip_cleanup: true
