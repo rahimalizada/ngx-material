@@ -1,5 +1,7 @@
 # NgxMaterial
 
+[![Build Status](https://www.travis-ci.com/rahimalizada/ngx-material.svg?branch=master)](https://www.travis-ci.com/rahimalizada/ngx-material)
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.1.2.
 
 ## Development server
