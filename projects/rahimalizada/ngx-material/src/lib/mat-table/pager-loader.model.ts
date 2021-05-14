@@ -8,8 +8,8 @@ export interface PagerLoader<T> {
     pageSize: number,
     sort: string,
     sortDirection: string,
-    searchTerms: string,
-    requestFilters?: any,
+    searchTerms?: string,
+    requestFilters?: unknown,
   ): Observable<PagerResult<T>>;
 
   pager(
@@ -17,7 +17,7 @@ export interface PagerLoader<T> {
     pageSize: number,
     sort: string,
     sortDirection: string,
-    searchTerms: string,
-    requestFilters?: any,
+    searchTerms?: string,
+    requestFilters?: unknown,
   ): Observable<PagerResult<T>>;
 }
