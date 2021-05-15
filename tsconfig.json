@@ -14,13 +14,14 @@
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
+    "target": "es2017",
+    "module": "es2020",
+    "lib": ["es2018", "dom"],
     "paths": {
       "@rahimalizada/ngx-material": ["dist/rahimalizada/ngx-material/rahimalizada-ngx-material", "dist/rahimalizada/ngx-material"]
     },
-    "target": "es2015",
-    "module": "es2020",
-    "lib": ["es2018", "dom"],
-    "resolveJsonModule": true // Custom
+    "resolveJsonModule": true, // Custom
+    "allowSyntheticDefaultImports": true // Custom
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
